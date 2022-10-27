@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function App() {
   const products=[
@@ -27,6 +27,7 @@ function App() {
       <header className="App-header">
 
       <Counter></Counter>
+      <Users></Users>
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit Done<code>src/App.js</code> and save to reload.
@@ -79,6 +80,27 @@ function Counter(){
     </div>
   )
 }
+
+function Users(){
+  const [users,setUsers]=useState([]);
+  useEffect(()=>
+  {
+    fetch('https://jsonplaceholder.typicode.com/users')
+    .then(res=>res.json())
+    .then(data=>setUsers(data))
+  });
+  return(
+    <div>
+      <h3>Dynamic users: {users.length}</h3>
+      <ul>
+        {
+          users.map(user=><li>{user.name}</li>)
+        }
+      </ul>
+    </div>
+  )
+}
+
 
 
 function Product(props){
